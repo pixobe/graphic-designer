@@ -1,3 +1,114 @@
 :host {
   display: block;
+  height: 100vh;
+  background: #f4f4f4;
+
+  .graphic-designer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    /* Sidebar (visible on large screens) */
+    .gd-sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 140px;
+      background: #fff;
+      border-right: 2px solid #000;
+      padding: 10px;
+      gap: 10px;
+
+      h3 {
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .tool-btn {
+        width: 100%;
+        padding: 8px;
+        background: #e0e0e0;
+        border: 2px solid #000;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+
+        &:hover {
+          background: #d5d5d5;
+        }
+
+        &.download {
+          background: #800000;
+          color: #fff;
+
+          &:hover {
+            background: #a00000;
+          }
+        }
+      }
+    }
+
+    /* Canvas area */
+    .gd-canvas-area {
+      flex: 1;
+      background: #efefef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .gd-canvas-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .tree {
+          max-height: 90%;
+          max-width: 80%;
+          object-fit: contain;
+        }
+      }
+    }
+
+    /* Footer (visible on small screens only) */
+    .gd-footer {
+      display: none;
+      justify-content: space-around;
+      align-items: center;
+      height: 70px;
+      background: #fff;
+      border-top: 2px solid #000;
+
+      .icon-btn {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  /* --- Responsive Rules --- */
+  @media (max-width: 767px) {
+    .graphic-designer {
+      flex-direction: column;
+
+      .gd-sidebar {
+        display: none;
+      }
+
+      .gd-footer {
+        display: flex;
+      }
+
+      .gd-canvas-area {
+        flex: 1;
+      }
+    }
+  }
 }

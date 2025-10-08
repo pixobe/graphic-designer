@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface GraphicDesigner {
+        "config": Record<string, any>;
+        "src": string;
     }
 }
 declare global {
@@ -22,6 +24,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface GraphicDesigner {
+        "config"?: Record<string, any>;
+        "src"?: string;
     }
     interface IntrinsicElements {
         "graphic-designer": GraphicDesigner;
