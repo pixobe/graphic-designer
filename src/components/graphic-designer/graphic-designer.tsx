@@ -9,7 +9,7 @@ export class GraphicDesigner {
   render() {
     return (
       <Host>
-        <slot></slot>
+        Hello worlds where are you are you ther worls
       </Host>
     );
   }
