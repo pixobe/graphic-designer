@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AppEvent } from "./index";
+export { AppEvent } from "./index";
 export namespace Components {
     interface GraphicDesigner {
         "config": Record<string, any>;
@@ -17,7 +19,7 @@ export interface GraphicDesignerCustomEvent<T> extends CustomEvent<T> {
 }
 declare global {
     interface HTMLGraphicDesignerElementEventMap {
-        "appEvents": any;
+        "appEventEmiiter": AppEvent;
     }
     interface HTMLGraphicDesignerElement extends Components.GraphicDesigner, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGraphicDesignerElementEventMap>(type: K, listener: (this: HTMLGraphicDesignerElement, ev: GraphicDesignerCustomEvent<HTMLGraphicDesignerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -40,7 +42,7 @@ declare global {
 declare namespace LocalJSX {
     interface GraphicDesigner {
         "config"?: Record<string, any>;
-        "onAppEvents"?: (event: GraphicDesignerCustomEvent<any>) => void;
+        "onAppEventEmiiter"?: (event: GraphicDesignerCustomEvent<AppEvent>) => void;
         "src"?: string;
     }
     interface IntrinsicElements {

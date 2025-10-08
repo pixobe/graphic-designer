@@ -1,4 +1,5 @@
-import { Component, Host, h, Element, Prop, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
+import { AppEvent, AppEventType } from 'src';
 import { EventHandler } from 'src/core/event.handler';
 import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
 
@@ -8,7 +9,8 @@ import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
   shadow: true,
 })
 export class GraphicDesigner {
-  @Element() el: HTMLGraphicDesignerElement;
+  @Element()
+  el!: HTMLGraphicDesignerElement;
 
   @Prop()
   src: string;
@@ -17,13 +19,18 @@ export class GraphicDesigner {
   config: Record<string, any>;
 
   @Event()
-  appEvents: EventEmitter;
+  appEventEmiiter: EventEmitter<AppEvent>;
 
   @State()
   drawerOpen: boolean = false;
 
   @State()
   drawerContent: string = '';
+
+  @Listen('appEvent')
+  appEventListener(event: CustomEvent<AppEvent>) {
+    console.log('Received the custom todoCompleted event: ', event.detail);
+  }
 
   eventHandler: EventHandler;
 
@@ -38,10 +45,6 @@ export class GraphicDesigner {
     this.eventHandler.init();
   }
 
-  raiseEvent() {
-
-  }
-
   handleToolClick(tool: string) {
     this.drawerContent = tool;
     this.drawerOpen = true;
@@ -51,6 +54,45 @@ export class GraphicDesigner {
     this.drawerOpen = false;
   }
 
+  handleEmojiClick(emoji: string) {
+    this.invokeEvent(AppEventType.AddEmoji, { emoji });
+    this.closeDrawer();
+  }
+
+  handleAddText() {
+    const textElement = this.el.shadowRoot!.querySelector('#graphic-text') as HTMLTextAreaElement;
+    const colorElement = this.el.shadowRoot!.querySelector('#text-color') as HTMLInputElement;
+
+    if (textElement && textElement.value.trim()) {
+      this.invokeEvent(AppEventType.AddText, {
+        text: textElement.value,
+        color: colorElement?.value || '#000000'
+      });
+      this.closeDrawer();
+    }
+  }
+
+  handleStartDrawing() {
+    const brushSizeElement = this.el.shadowRoot!.querySelector('#brush-size') as HTMLInputElement;
+    const brushColorElement = this.el.shadowRoot!.querySelector('#brush-color') as HTMLInputElement;
+
+    this.invokeEvent(AppEventType.StartDrawing, {
+      brushSize: brushSizeElement?.value || 5,
+      color: brushColorElement?.value || '#000000'
+    });
+    this.closeDrawer();
+  }
+
+  handleDownload(format: string) {
+    this.invokeEvent(AppEventType.DownloadImage, { format });
+    this.closeDrawer();
+  }
+
+
+  invokeEvent(eventType: AppEventType, props: any) {
+    console.log(eventType, props)
+  }
+
   renderDrawerContent() {
     switch (this.drawerContent) {
       case 'emoji':
@@ -58,12 +100,12 @@ export class GraphicDesigner {
           <div class="drawer-section">
             <h4>Add Emoji</h4>
             <div class="emoji-grid">
-              <button class="emoji-option">😃</button>
-              <button class="emoji-option">🎄</button>
-              <button class="emoji-option">⭐</button>
-              <button class="emoji-option">❤️</button>
-              <button class="emoji-option">🎁</button>
-              <button class="emoji-option">⛄</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('😃')}>😃</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('🎄')}>🎄</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('⭐')}>⭐</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('❤️')}>❤️</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('🎁')}>🎁</button>
+              <button class="emoji-option" onClick={() => this.handleEmojiClick('⛄')}>⛄</button>
             </div>
           </div>
         );
@@ -72,27 +114,29 @@ export class GraphicDesigner {
           <div class="drawer-section">
             <h4>Draw Settings</h4>
             <label>Brush Size:</label>
-            <input type="range" min="1" max="20" value="5" />
+            <input type="range" min="1" max="20" value="5" id="brush-size" />
             <label>Color:</label>
-            <input type="color" value="#000000" />
+            <input type="color" value="#000000" id="brush-color" />
+            <button class="btn-primary" onClick={() => this.handleStartDrawing()}>Start Drawing</button>
           </div>
         );
       case 'text':
         return (
           <div class="drawer-section">
             <h4>Add Text</h4>
-            <textarea placeholder="Enter text..."></textarea>
-            <label>Font Size:</label>
-            <input type="number" value="16" />
+            <textarea placeholder="Enter text..." id="graphic-text"></textarea>
+            <label>Font Color:</label>
+            <input type="color" value="#000000" id="text-color" />
+            <button class="btn-primary" onClick={() => this.handleAddText()}>Start Drawing</button>
           </div>
         );
       case 'download':
         return (
           <div class="drawer-section">
             <h4>Download</h4>
-            <button class="download-option">PNG</button>
-            <button class="download-option">JPG</button>
-            <button class="download-option">SVG</button>
+            <button class="download-option" onClick={() => this.handleDownload('PNG')}>PNG</button>
+            <button class="download-option" onClick={() => this.handleDownload('JPG')}>JPG</button>
+            <button class="download-option" onClick={() => this.handleDownload('SVG')}>SVG</button>
           </div>
         );
       default:

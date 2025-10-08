@@ -9,3 +9,21 @@
  */
 
 export type * from './components.d.ts';
+
+/**
+ *
+ */
+export enum AppEventType {
+  AddText = 'addText',
+  AddEmoji = 'addEmoji',
+  StartDrawing = 'startDrawing',
+  DownloadImage = 'downloadImage',
+}
+
+/**
+ *
+ */
+export interface AppEvent {
+  type: AppEventType;
+  payload?: any;
+}
