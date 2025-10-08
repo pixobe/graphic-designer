@@ -11,8 +11,23 @@ export namespace Components {
         "src": string;
     }
 }
+export interface GraphicDesignerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGraphicDesignerElement;
+}
 declare global {
+    interface HTMLGraphicDesignerElementEventMap {
+        "appEvents": any;
+    }
     interface HTMLGraphicDesignerElement extends Components.GraphicDesigner, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGraphicDesignerElementEventMap>(type: K, listener: (this: HTMLGraphicDesignerElement, ev: GraphicDesignerCustomEvent<HTMLGraphicDesignerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGraphicDesignerElementEventMap>(type: K, listener: (this: HTMLGraphicDesignerElement, ev: GraphicDesignerCustomEvent<HTMLGraphicDesignerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGraphicDesignerElement: {
         prototype: HTMLGraphicDesignerElement;
@@ -25,6 +40,7 @@ declare global {
 declare namespace LocalJSX {
     interface GraphicDesigner {
         "config"?: Record<string, any>;
+        "onAppEvents"?: (event: GraphicDesignerCustomEvent<any>) => void;
         "src"?: string;
     }
     interface IntrinsicElements {

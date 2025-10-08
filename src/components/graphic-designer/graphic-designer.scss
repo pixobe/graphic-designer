@@ -1,12 +1,13 @@
 :host {
   display: block;
-  height: 100vh;
+  height: 100dvh;
   background: #f4f4f4;
 
   .graphic-designer {
     display: flex;
     flex-direction: row;
     height: 100%;
+    position: relative;
 
     /* Sidebar (visible on large screens) */
     .gd-sidebar {
@@ -17,6 +18,7 @@
       border-right: 2px solid #000;
       padding: 10px;
       gap: 10px;
+      z-index: 10;
 
       h3 {
         text-align: center;
@@ -48,6 +50,120 @@
       }
     }
 
+    /* Overlay Drawer */
+    .drawer-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .drawer-panel {
+      position: absolute;
+      top: 0;
+      left: 140px;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      border-right: 2px solid #000;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      animation: slideIn 0.3s ease;
+      overflow-y: auto;
+
+      .drawer-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px 10px;
+        line-height: 1;
+
+        &:hover {
+          background: #f0f0f0;
+          border-radius: 4px;
+        }
+      }
+
+      .drawer-section {
+        margin-top: 30px;
+
+        h4 {
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+          border-bottom: 2px solid #000;
+          padding-bottom: 8px;
+        }
+
+        label {
+          display: block;
+          margin-top: 12px;
+          margin-bottom: 5px;
+          font-weight: 600;
+        }
+
+        input[type='range'],
+        input[type='color'],
+        input[type='number'] {
+          width: 100%;
+          padding: 5px;
+          margin-bottom: 10px;
+        }
+
+        textarea {
+          width: 100%;
+          min-height: 100px;
+          padding: 10px;
+          border: 2px solid #000;
+          font-family: inherit;
+          resize: vertical;
+        }
+
+        .emoji-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          margin-top: 10px;
+
+          .emoji-option {
+            padding: 15px;
+            font-size: 2rem;
+            background: #f0f0f0;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: #e0e0e0;
+              transform: scale(1.1);
+            }
+          }
+        }
+
+        .download-option {
+          display: block;
+          width: 100%;
+          padding: 12px;
+          margin-bottom: 10px;
+          background: #e0e0e0;
+          border: 2px solid #000;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover {
+            background: #d5d5d5;
+          }
+        }
+      }
+    }
+
     /* Canvas area */
     .gd-canvas-area {
       flex: 1;
@@ -61,6 +177,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 100%;
+        width: 100%;
 
         .tree {
           max-height: 90%;
@@ -78,6 +196,7 @@
       height: 70px;
       background: #fff;
       border-top: 2px solid #000;
+      z-index: 10;
 
       .icon-btn {
         background: none;
@@ -93,6 +212,25 @@
     }
   }
 
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
   /* --- Responsive Rules --- */
   @media (max-width: 767px) {
     .graphic-designer {
@@ -100,6 +238,12 @@
 
       .gd-sidebar {
         display: none;
+      }
+
+      .drawer-panel {
+        left: 0;
+        width: 80%;
+        max-width: 300px;
       }
 
       .gd-footer {
