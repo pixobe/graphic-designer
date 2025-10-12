@@ -1,0 +1,24 @@
+.form-element,
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-element {
+  input,
+  select,
+  textarea {
+    width: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+.form-element {
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

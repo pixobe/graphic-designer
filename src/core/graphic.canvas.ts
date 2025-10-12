@@ -19,13 +19,4 @@ export class GraphicCanvas extends Canvas {
     this.config = config;
     this.requestRenderAll();
   }
-
-  /**
-   *
-   */
-  addText(text: string) {
-    const itext = new IText(text);
-    this.add(itext);
-    this.requestRenderAll();
-  }
 }

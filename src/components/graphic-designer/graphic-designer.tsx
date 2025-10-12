@@ -3,6 +3,10 @@ import { AppEvent, AppEventType } from 'src';
 import { EventHandler } from 'src/core/event.handler';
 import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
 
+// ✅ Import emoji-mart data
+import data from '@emoji-mart/data';
+import { init } from 'emoji-mart';
+
 @Component({
   tag: 'graphic-designer',
   styleUrl: 'graphic-designer.scss',
@@ -12,30 +16,28 @@ export class GraphicDesigner {
   @Element()
   el!: HTMLGraphicDesignerElement;
 
-  @Prop()
-  src: string;
-
-  @Prop()
-  config: Record<string, any>;
+  @Prop() src: string;
+  @Prop() config: Record<string, any>;
 
   @Event()
-  appEventEmiiter: EventEmitter<AppEvent>;
+  appEventEmiiter: EventEmitter<AppEvent<any>>;
 
   @State()
   drawerOpen: boolean = false;
-
   @State()
   drawerContent: string = '';
 
-  @Listen('appEvent')
-  appEventListener(event: CustomEvent<AppEvent>) {
-    console.log('Received the custom todoCompleted event: ', event.detail);
-  }
-
   eventHandler: EventHandler;
 
-  componentWillLoad() {
-    console.log("Loading")
+  @Listen('appEvent')
+  appEventListener(event: CustomEvent<AppEvent<any>>) {
+    console.log('Received custom event:', event.detail);
+    const detail: AppEvent<any> = event.detail;
+    this.invokeEvent(detail.type, detail.payload);
+    this.closeDrawer();
+  }
+
+  async componentWillLoad() {
     this.eventHandler = new EventHandler(this.el);
   }
 
@@ -52,11 +54,6 @@ export class GraphicDesigner {
 
   closeDrawer() {
     this.drawerOpen = false;
-  }
-
-  handleEmojiClick(emoji: string) {
-    this.invokeEvent(AppEventType.AddEmoji, { emoji });
-    this.closeDrawer();
   }
 
   handleAddText() {
@@ -88,9 +85,8 @@ export class GraphicDesigner {
     this.closeDrawer();
   }
 
-
   invokeEvent(eventType: AppEventType, props: any) {
-    console.log(eventType, props)
+    this.eventHandler.handleEvent({ type: eventType, payload: props });
   }
 
   renderDrawerContent() {
@@ -99,25 +95,14 @@ export class GraphicDesigner {
         return (
           <div class="drawer-section">
             <h4>Add Emoji</h4>
-            <div class="emoji-grid">
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('😃')}>😃</button>
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('🎄')}>🎄</button>
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('⭐')}>⭐</button>
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('❤️')}>❤️</button>
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('🎁')}>🎁</button>
-              <button class="emoji-option" onClick={() => this.handleEmojiClick('⛄')}>⛄</button>
-            </div>
+            <emoji-picker></emoji-picker>
           </div>
         );
       case 'draw':
         return (
           <div class="drawer-section">
             <h4>Draw Settings</h4>
-            <label>Brush Size:</label>
-            <input type="range" min="1" max="20" value="5" id="brush-size" />
-            <label>Color:</label>
-            <input type="color" value="#000000" id="brush-color" />
-            <button class="btn-primary" onClick={() => this.handleStartDrawing()}>Start Drawing</button>
+            <free-drawing></free-drawing>
           </div>
         );
       case 'text':
@@ -127,7 +112,7 @@ export class GraphicDesigner {
             <textarea placeholder="Enter text..." id="graphic-text"></textarea>
             <label>Font Color:</label>
             <input type="color" value="#000000" id="text-color" />
-            <button class="btn-primary" onClick={() => this.handleAddText()}>Start Drawing</button>
+            <button class="btn-primary" onClick={() => this.handleAddText()}>Add Text</button>
           </div>
         );
       case 'download':
@@ -150,7 +135,6 @@ export class GraphicDesigner {
         <div class="graphic-designer">
           {/* Sidebar for large screens */}
           <aside class="gd-sidebar" role="complementary" aria-label="tools">
-            <h3>Tools</h3>
             <button class="tool-btn" onClick={() => this.handleToolClick('emoji')}>😃 Add Emoji</button>
             <button class="tool-btn" onClick={() => this.handleToolClick('draw')}>✏️ Draw</button>
             <button class="tool-btn" onClick={() => this.handleToolClick('text')}>⭐ Add Text</button>
@@ -179,7 +163,7 @@ export class GraphicDesigner {
             <button class="icon-btn" aria-label="Add Emoji" onClick={() => this.handleToolClick('emoji')}>😃</button>
             <button class="icon-btn" aria-label="Draw" onClick={() => this.handleToolClick('draw')}>✏️</button>
             <button class="icon-btn" aria-label="Star" onClick={() => this.handleToolClick('text')}>⭐</button>
-            <button class="icon-btn" aria-label="Ornament" onClick={() => this.handleToolClick('emoji')}>🎄</button>
+            <button class="icon-btn" aria-label="Tree" onClick={() => this.handleToolClick('emoji')}>🎄</button>
             <button class="icon-btn" aria-label="Download" onClick={() => this.handleToolClick('download')}>⬇️</button>
           </footer>
         </div>

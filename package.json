@@ -48,6 +48,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@lobehub/fluent-emoji": "^2.0.0",
     "@stencil/sass": "^3.2.2",
     "fabric": "7.0.0-beta1"
   }

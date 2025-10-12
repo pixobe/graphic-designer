@@ -23,7 +23,16 @@ export enum AppEventType {
 /**
  *
  */
-export interface AppEvent {
+export interface AppEvent<T> {
   type: AppEventType;
-  payload?: any;
+  payload?: T;
+}
+
+/**
+ *
+ */
+export interface FreeDrawingDto {
+  brushType: string;
+  brushSize: number;
+  color: string;
 }
