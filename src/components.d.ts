@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AppEvent, FreeDrawingDto, GraphicDesingConfig } from "./index";
-export { AppEvent, FreeDrawingDto, GraphicDesingConfig } from "./index";
+import { AppEvent, FreeDrawingDto, GraphicDesingConfig, GraphicTextDto } from "./index";
+export { AppEvent, FreeDrawingDto, GraphicDesingConfig, GraphicTextDto } from "./index";
 export namespace Components {
     interface EmojiPicker {
     }
@@ -30,6 +30,10 @@ export interface FreeDrawingCustomEvent<T> extends CustomEvent<T> {
 export interface GraphicDesignerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGraphicDesignerElement;
+}
+export interface GraphicTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGraphicTextElement;
 }
 declare global {
     interface HTMLEmojiPickerElementEventMap {
@@ -83,7 +87,18 @@ declare global {
         prototype: HTMLGraphicDesignerElement;
         new (): HTMLGraphicDesignerElement;
     };
+    interface HTMLGraphicTextElementEventMap {
+        "appEvent": AppEvent<GraphicTextDto>;
+    }
     interface HTMLGraphicTextElement extends Components.GraphicText, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGraphicTextElementEventMap>(type: K, listener: (this: HTMLGraphicTextElement, ev: GraphicTextCustomEvent<HTMLGraphicTextElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGraphicTextElementEventMap>(type: K, listener: (this: HTMLGraphicTextElement, ev: GraphicTextCustomEvent<HTMLGraphicTextElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGraphicTextElement: {
         prototype: HTMLGraphicTextElement;
@@ -109,6 +124,7 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface GraphicText {
+        "onAppEvent"?: (event: GraphicTextCustomEvent<AppEvent<GraphicTextDto>>) => void;
     }
     interface IntrinsicElements {
         "emoji-picker": EmojiPicker;

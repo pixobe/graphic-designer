@@ -59,7 +59,7 @@ export class FreeDrawing {
             </div>
           </div>
           <div class="form-buttons">
-            <button class="btn-primary" onClick={() => this.emit()} type="button">Start Drawing</button>
+            <button class="btn-primary" onClick={() => this.emit()} type="button">Done</button>
           </div>
         </form>
       </Host>

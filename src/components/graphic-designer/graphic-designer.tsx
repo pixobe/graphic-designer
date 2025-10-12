@@ -105,11 +105,8 @@ export class GraphicDesigner {
       case 'text':
         return (
           <div class="drawer-section">
-            <h4>Add Text</h4>
-            <textarea placeholder="Enter text..." id="graphic-text"></textarea>
-            <label>Font Color:</label>
-            <input type="color" value="#000000" id="text-color" />
-            <button class="btn-primary" onClick={() => this.handleAddText()}>Add Text</button>
+            <h4>Text Settings</h4>
+            <graphic-text></graphic-text>
           </div>
         );
       case 'download':

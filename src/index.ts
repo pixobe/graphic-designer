@@ -37,6 +37,14 @@ export interface FreeDrawingDto {
   color: string;
 }
 
+/**
+ *
+ */
+export interface GraphicTextDto {
+  text: string;
+  color: string;
+}
+
 export interface MediaItem {
   url: string;
 }
