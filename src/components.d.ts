@@ -5,15 +5,15 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AppEvent, FreeDrawingDto } from "./index";
-export { AppEvent, FreeDrawingDto } from "./index";
+import { AppEvent, FreeDrawingDto, GraphicDesingConfig } from "./index";
+export { AppEvent, FreeDrawingDto, GraphicDesingConfig } from "./index";
 export namespace Components {
     interface EmojiPicker {
     }
     interface FreeDrawing {
     }
     interface GraphicDesigner {
-        "config": Record<string, any>;
+        "config": GraphicDesingConfig;
         "src": string;
     }
     interface GraphicText {
@@ -104,7 +104,7 @@ declare namespace LocalJSX {
         "onAppEvent"?: (event: FreeDrawingCustomEvent<AppEvent<FreeDrawingDto>>) => void;
     }
     interface GraphicDesigner {
-        "config"?: Record<string, any>;
+        "config"?: GraphicDesingConfig;
         "onAppEventEmiiter"?: (event: GraphicDesignerCustomEvent<AppEvent<any>>) => void;
         "src"?: string;
     }

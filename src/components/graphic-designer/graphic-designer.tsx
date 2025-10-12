@@ -1,11 +1,7 @@
 import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
-import { AppEvent, AppEventType } from 'src';
+import { AppEvent, AppEventType, GraphicDesingConfig } from 'src';
 import { EventHandler } from 'src/core/event.handler';
 import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
-
-// ✅ Import emoji-mart data
-import data from '@emoji-mart/data';
-import { init } from 'emoji-mart';
 
 @Component({
   tag: 'graphic-designer',
@@ -16,8 +12,10 @@ export class GraphicDesigner {
   @Element()
   el!: HTMLGraphicDesignerElement;
 
-  @Prop() src: string;
-  @Prop() config: Record<string, any>;
+  @Prop()
+  src: string;
+  @Prop()
+  config: GraphicDesingConfig;
 
   @Event()
   appEventEmiiter: EventEmitter<AppEvent<any>>;
@@ -31,7 +29,6 @@ export class GraphicDesigner {
 
   @Listen('appEvent')
   appEventListener(event: CustomEvent<AppEvent<any>>) {
-    console.log('Received custom event:', event.detail);
     const detail: AppEvent<any> = event.detail;
     this.invokeEvent(detail.type, detail.payload);
     this.closeDrawer();

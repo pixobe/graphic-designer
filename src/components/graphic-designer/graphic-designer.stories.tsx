@@ -4,8 +4,7 @@ import { GraphicDesigner } from './graphic-designer';
 
 const meta: Meta<GraphicDesigner> = {
     title: "Graphic Designer/Designs",
-    render: (args, { loaded: { } }) => {
-        console.log(args);
+    render: (_, { loaded: { } }) => {
         const el = document.createElement("graphic-designer");
         return el;
     }

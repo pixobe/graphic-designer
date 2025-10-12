@@ -58,9 +58,6 @@ export class EventHandler {
   startDrawing(payload: FreeDrawingDto) {
     const canvas = this.graphicCanvas;
     canvas.isDrawingMode = true;
-
-    console.log(payload.brushType);
-
     switch (payload?.brushType) {
       case 'pattern': {
         canvas.freeDrawingBrush = new fabric.PatternBrush(canvas);
@@ -78,7 +75,6 @@ export class EventHandler {
         canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
       }
     }
-
     canvas.freeDrawingBrush.color = payload.color;
     canvas.freeDrawingBrush.width = payload.brushSize;
   }

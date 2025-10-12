@@ -36,3 +36,19 @@ export interface FreeDrawingDto {
   brushSize: number;
   color: string;
 }
+
+export interface MediaItem {
+  url: string;
+}
+
+export interface MediaGallery {
+  name: string;
+  items: MediaItem[];
+}
+
+/**
+ *
+ */
+export interface GraphicDesingConfig {
+  gallery: MediaGallery;
+}
