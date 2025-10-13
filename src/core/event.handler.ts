@@ -18,7 +18,17 @@ export class EventHandler {
   init() {
     const canvas: HTMLCanvasElement = this.el.shadowRoot?.querySelector('canvas')!;
     if (!canvas) return;
-    this.graphicCanvas = new GraphicCanvas({ canvas, config: {}, src: this.src });
+    this.graphicCanvas = new GraphicCanvas({
+      canvas,
+      config: {},
+      src: this.src,
+      controlConfig: {
+        delete: true,
+        edit: true,
+        rotate: true,
+        expand: true,
+      },
+    });
     return this.graphicCanvas.renderBg();
   }
 
