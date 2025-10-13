@@ -35,7 +35,7 @@ export class GraphicDesigner {
   }
 
   async componentWillLoad() {
-    this.eventHandler = new EventHandler(this.el);
+    this.eventHandler = new EventHandler(this.el, this.src);
   }
 
   @ResizeHandler
@@ -51,30 +51,6 @@ export class GraphicDesigner {
 
   closeDrawer() {
     this.drawerOpen = false;
-  }
-
-  handleAddText() {
-    const textElement = this.el.shadowRoot!.querySelector('#graphic-text') as HTMLTextAreaElement;
-    const colorElement = this.el.shadowRoot!.querySelector('#text-color') as HTMLInputElement;
-
-    if (textElement && textElement.value.trim()) {
-      this.invokeEvent(AppEventType.AddText, {
-        text: textElement.value,
-        color: colorElement?.value || '#000000'
-      });
-      this.closeDrawer();
-    }
-  }
-
-  handleStartDrawing() {
-    const brushSizeElement = this.el.shadowRoot!.querySelector('#brush-size') as HTMLInputElement;
-    const brushColorElement = this.el.shadowRoot!.querySelector('#brush-color') as HTMLInputElement;
-
-    this.invokeEvent(AppEventType.StartDrawing, {
-      brushSize: brushSizeElement?.value || 5,
-      color: brushColorElement?.value || '#000000'
-    });
-    this.closeDrawer();
   }
 
   handleDownload(format: string) {

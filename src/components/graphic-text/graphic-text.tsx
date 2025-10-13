@@ -33,7 +33,7 @@ export class GraphicText {
         <form class="form-group">
           <div class="form-element">
             <label>Text:</label>
-            <textarea id="graphic-text" ></textarea>
+            <textarea id="graphic-text" rows={10}></textarea>
           </div>
           <div class="form-element">
             <label>Color:</label>

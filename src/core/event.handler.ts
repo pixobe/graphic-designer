@@ -7,16 +7,19 @@ import { AppEvent, AppEventType, FreeDrawingDto } from 'src';
 
 export class EventHandler {
   private el: HTMLElement;
+  private src?: string;
   private graphicCanvas: GraphicCanvas;
 
-  constructor(el: HTMLElement) {
+  constructor(el: HTMLElement, src?: string) {
     this.el = el;
+    this.src = src;
   }
 
   init() {
     const canvas: HTMLCanvasElement = this.el.shadowRoot?.querySelector('canvas')!;
     if (!canvas) return;
-    this.graphicCanvas = new GraphicCanvas({ canvas, config: {}, src: '' });
+    this.graphicCanvas = new GraphicCanvas({ canvas, config: {}, src: this.src });
+    return this.graphicCanvas.renderBg();
   }
 
   handleEvent(event: AppEvent<any>): void {
@@ -31,15 +34,9 @@ export class EventHandler {
       case AppEventType.StartDrawing:
         this.startDrawing(event.payload);
         break;
-      // case AppEventType.StopDrawing:
-      //   this.stopDrawing();
-      //   break;
-      // case AppEventType.ClearCanvas:
-      //   this.clearCanvas();
-      //   break;
-      // case AppEventType.DownloadImage:
-      //   this.downloadImage(payload.format, payload.quality);
-      //   break;
+      case AppEventType.DownloadImage:
+        this.downloadImage();
+        break;
       default:
         console.warn(`Unhandled event type: ${event}`);
     }
@@ -47,12 +44,12 @@ export class EventHandler {
 
   addText(payload: any) {
     const itext = new fabric.IText(payload.text, { fill: payload.color || '#000000' });
-    this.graphicCanvas.add(itext);
+    this.graphicCanvas.addCentered(itext);
   }
 
   addEmoji(payload: any) {
     const itext = new fabric.IText(payload.native, {});
-    this.graphicCanvas.add(itext);
+    this.graphicCanvas.addCentered(itext);
   }
 
   startDrawing(payload: FreeDrawingDto) {
@@ -77,5 +74,14 @@ export class EventHandler {
     }
     canvas.freeDrawingBrush.color = payload.color;
     canvas.freeDrawingBrush.width = payload.brushSize;
+  }
+
+  /**
+   *
+   * @param format
+   * @param quality
+   */
+  downloadImage() {
+    console.log('Donwload');
   }
 }

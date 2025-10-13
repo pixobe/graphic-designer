@@ -4,8 +4,10 @@ import { GraphicDesigner } from './graphic-designer';
 
 const meta: Meta<GraphicDesigner> = {
     title: "Graphic Designer/Designs",
-    render: (_, { loaded: { } }) => {
+    render: (args, { loaded: { } }) => {
         const el = document.createElement("graphic-designer");
+        //
+        el.src = args.src;
         return el;
     }
 };
@@ -15,5 +17,6 @@ type Story = StoryObj<GraphicDesigner>;
 
 export const Design: Story = {
     args: {
+        src: "/assets/hello-kitty.jpg"
     }
 };
