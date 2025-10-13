@@ -17,7 +17,7 @@ export class GraphicDesigner {
   @Prop()
   config: GraphicDesingConfig;
 
-  @Event()
+  @Event({ eventName: 'appEvent' })
   appEventEmiiter: EventEmitter<AppEvent<any>>;
 
   @State()
@@ -28,13 +28,24 @@ export class GraphicDesigner {
   eventHandler: EventHandler;
 
   @Listen('appEvent')
-  appEventListener(event: CustomEvent<AppEvent<any>>) {
+  async appEventListener(event: CustomEvent<AppEvent<any>>): Promise<void> {
     const detail: AppEvent<any> = event.detail;
     this.invokeEvent(detail.type, detail.payload);
     this.closeDrawer();
   }
 
+  downloadEvent() {
+    this.appEventEmiiter.emit({ type: AppEventType.DownloadImage });
+  }
+
   async componentWillLoad() {
+    try {
+      if (typeof this.config === 'string') {
+        this.config = JSON.parse(this.config);
+      }
+    } catch (e) {
+      console.error(e)
+    }
     this.eventHandler = new EventHandler(this.el, this.src);
   }
 
@@ -58,8 +69,8 @@ export class GraphicDesigner {
     this.closeDrawer();
   }
 
-  invokeEvent(eventType: AppEventType, props: any) {
-    this.eventHandler.handleEvent({ type: eventType, payload: props });
+  async invokeEvent(eventType: AppEventType, props: any): Promise<void> {
+    await this.eventHandler.handleEvent({ type: eventType, payload: props });
   }
 
   renderDrawerContent() {
@@ -85,13 +96,12 @@ export class GraphicDesigner {
             <graphic-text></graphic-text>
           </div>
         );
-      case 'download':
+      case 'image':
+        console.log(this.config?.gallery)
         return (
           <div class="drawer-section">
-            <h4>Download</h4>
-            <button class="download-option" onClick={() => this.handleDownload('PNG')}>PNG</button>
-            <button class="download-option" onClick={() => this.handleDownload('JPG')}>JPG</button>
-            <button class="download-option" onClick={() => this.handleDownload('SVG')}>SVG</button>
+            <h4>Media Gallery</h4>
+            <graphic-gallery mediaGallery={this.config?.gallery}></graphic-gallery>
           </div>
         );
       default:
@@ -105,10 +115,11 @@ export class GraphicDesigner {
         <div class="graphic-designer">
           {/* Sidebar for large screens */}
           <aside class="gd-sidebar" role="complementary" aria-label="tools">
-            <button class="tool-btn" onClick={() => this.handleToolClick('emoji')}>😃 Add Emoji</button>
+            <button class="tool-btn" onClick={() => this.handleToolClick('emoji')}>😃  Emoji</button>
             <button class="tool-btn" onClick={() => this.handleToolClick('draw')}>✏️ Draw</button>
-            <button class="tool-btn" onClick={() => this.handleToolClick('text')}>⭐ Add Text</button>
-            <button class="tool-btn download" onClick={() => this.handleToolClick('download')}>⬇️ Download</button>
+            <button class="tool-btn" onClick={() => this.handleToolClick('text')}>⭐  Text</button>
+            <button class="tool-btn" onClick={() => this.handleToolClick('image')}>🎄 Gallery</button>
+            <button class="tool-btn download" onClick={() => this.downloadEvent()}>⬇️ Download</button>
           </aside>
 
           {/* Overlay Drawer */}
@@ -133,8 +144,8 @@ export class GraphicDesigner {
             <button class="icon-btn" aria-label="Add Emoji" onClick={() => this.handleToolClick('emoji')}>😃</button>
             <button class="icon-btn" aria-label="Draw" onClick={() => this.handleToolClick('draw')}>✏️</button>
             <button class="icon-btn" aria-label="Star" onClick={() => this.handleToolClick('text')}>⭐</button>
-            <button class="icon-btn" aria-label="Tree" onClick={() => this.handleToolClick('emoji')}>🎄</button>
-            <button class="icon-btn" aria-label="Download" onClick={() => this.handleToolClick('download')}>⬇️</button>
+            <button class="icon-btn" aria-label="Tree" onClick={() => this.handleToolClick('image')}>🎄</button>
+            <button class="icon-btn" aria-label="Download" onClick={() => this.downloadEvent()}>⬇️</button>
           </footer>
         </div>
       </Host>

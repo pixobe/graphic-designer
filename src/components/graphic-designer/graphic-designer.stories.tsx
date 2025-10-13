@@ -8,6 +8,7 @@ const meta: Meta<GraphicDesigner> = {
         const el = document.createElement("graphic-designer");
         //
         el.src = args.src;
+        el.config = args.config;
         return el;
     }
 };
@@ -17,6 +18,25 @@ type Story = StoryObj<GraphicDesigner>;
 
 export const Design: Story = {
     args: {
-        src: "/assets/hello-kitty.jpg"
+        src: "/assets/hello-kitty.jpg",
+        config: {
+            gallery: {
+                name: "Media Gallery",
+                items: [
+                    {
+                        url: "/assets/gallery/cow-calf.png"
+                    },
+                    {
+                        url: "/assets/gallery/mouse.png"
+                    },
+                    {
+                        url: "/assets/gallery/lion.jpg"
+                    },
+                    {
+                        url: "/assets/gallery/monster-car.jpg"
+                    },
+                ]
+            }
+        }
     }
 };

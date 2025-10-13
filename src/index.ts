@@ -18,6 +18,7 @@ export enum AppEventType {
   AddEmoji = 'addEmoji',
   StartDrawing = 'startDrawing',
   DownloadImage = 'downloadImage',
+  AddImage = 'addImage',
 }
 
 /**
