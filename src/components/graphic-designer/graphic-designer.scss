@@ -1,84 +1,111 @@
 :host {
-  display: block;
-  height: 100vh;
-  background: #f4f4f4;
+  --bg: #f4f4f4;
+  --card: #fff;
+  --border: #000;
+  --muted: #e0e0e0;
+  --muted-hover: #d5d5d5;
+  --danger: #800000;
+  --danger-hover: #a00000;
+  --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --sidebar-w: 140px;
 
+  display: block;
+  min-height: 100dvh;
+  background: var(--bg);
+
+  :where(.btn) {
+    inline-size: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--muted);
+    border: 2px solid var(--border);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background 150ms ease;
+  }
+  :where(.btn:hover) {
+    background: var(--muted-hover);
+  }
+  :where(.btn--danger) {
+    background: var(--danger);
+    color: #fff;
+  }
+  :where(.btn--danger:hover) {
+    background: var(--danger-hover);
+  }
+
+  :where(.icon-btn) {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 150ms ease;
+  }
+  :where(.icon-btn:hover) {
+    transform: scale(1.12);
+  }
+
+  :where(.panel) {
+    background: var(--card);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  /* ── Layout ────────────────────────────────────────────────────── */
   .graphic-designer {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    block-size: 100%;
     position: relative;
+    gap: 0; /* explicit */
 
-    /* Sidebar (visible on large screens) */
+    /* Sidebar (large screens) */
     .gd-sidebar {
       display: flex;
       flex-direction: column;
-      width: 140px;
-      background: #fff;
-      border-right: 2px solid #000;
+      inline-size: var(--sidebar-w);
+      background: var(--card);
+      border-inline-end: 2px solid var(--border);
       padding: 10px;
       gap: 10px;
       z-index: 10;
 
       h3 {
         text-align: center;
-        font-size: 1.1rem;
-        margin-bottom: 10px;
+        font-size: clamp(1rem, 0.9rem + 0.3vw, 1.1rem);
+        margin: 0 0 10px;
       }
 
       .tool-btn {
-        width: 100%;
-        padding: 8px;
-        background: #e0e0e0;
-        border: 2px solid #000;
-        font-weight: 600;
-        cursor: pointer;
-        text-align: center;
-
-        &:hover {
-          background: #d5d5d5;
-        }
-
-        &.download {
-          background: #800000;
-          color: #fff;
-
-          &:hover {
-            background: #a00000;
-          }
-        }
+        @extend .btn;
+      }
+      .tool-btn.download {
+        @extend .btn--danger;
       }
     }
 
     /* Overlay Drawer */
     .drawer-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: rgba(0, 0, 0, 0.5);
       z-index: 100;
+      animation: fadeIn 120ms ease-out;
     }
 
     .drawer-panel {
       position: absolute;
       top: 0;
-      left: 140px;
-      width: fit-content;
-      height: fit-content;
-      max-height: 100%;
-      background: #fff;
-      border: 2px solid #000;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+      left: var(--sidebar-w);
+      max-block-size: 100%;
       padding: 20px;
       overflow-y: auto;
-      margin: auto;
+      @extend .panel;
 
       .drawer-close {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        inset-block-start: 10px;
+        inset-inline-end: 10px;
         background: none;
         border: none;
         font-size: 1.5rem;
@@ -94,30 +121,19 @@
 
       .drawer-section {
         margin-top: 30px;
-        min-width: 300px;
+        min-inline-size: 300px;
         padding: 0.5rem;
         box-sizing: border-box;
 
         h4 {
-          font-size: 1.3rem;
-          margin-bottom: 15px;
-          border-bottom: 2px solid #000;
+          font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+          margin: 0 0 15px;
+          border-bottom: 2px solid var(--border);
           padding-bottom: 8px;
         }
 
         .download-option {
-          display: block;
-          width: 100%;
-          padding: 12px;
-          margin-bottom: 10px;
-          background: #e0e0e0;
-          border: 2px solid #000;
-          font-weight: 600;
-          cursor: pointer;
-
-          &:hover {
-            background: #d5d5d5;
-          }
+          @extend .btn;
         }
       }
     }
@@ -126,51 +142,38 @@
     .gd-canvas-area {
       flex: 1;
       background: #efefef;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      place-items: center;
       position: relative;
 
       .gd-canvas-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
+        inline-size: 100%;
+        block-size: 100%;
+        display: grid;
+        place-items: center;
 
         .tree {
-          max-height: 90%;
-          max-width: 80%;
+          max-block-size: 90%;
+          max-inline-size: 80%;
           object-fit: contain;
         }
       }
     }
 
-    /* Footer (visible on small screens only) */
+    /* Footer (small screens only) */
     .gd-footer {
       display: none;
       justify-content: space-around;
       align-items: center;
-      height: 70px;
-      background: #fff;
-      border-top: 2px solid #000;
+      block-size: 70px;
+      background: var(--card);
+      border-top: 2px solid var(--border);
       z-index: 10;
-
-      .icon-btn {
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
+      /* .icon-btn styles come from the atom above */
     }
   }
 
-  /* Animations */
+  /* ── Animations (respect reduced motion) ───────────────────────── */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -179,8 +182,17 @@
       opacity: 1;
     }
   }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
 
-  /* --- Responsive Rules --- */
+  /* ── Responsive ────────────────────────────────────────────────── */
   @media (max-width: 767px) {
     .graphic-designer {
       flex-direction: column;
@@ -191,14 +203,12 @@
 
       .drawer-panel {
         left: 0;
-        width: fit-content;
-        max-width: 90%;
+        inline-size: min(90%, 720px);
       }
 
       .gd-footer {
         display: flex;
       }
-
       .gd-canvas-area {
         flex: 1;
       }

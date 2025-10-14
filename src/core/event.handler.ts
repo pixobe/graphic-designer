@@ -122,4 +122,8 @@ export class EventHandler {
       multiplier: 2, // 2x resolution for higher quality
     });
   }
+
+  getCanvasData(): any {
+    return this.graphicCanvas.toDatalessJSON();
+  }
 }

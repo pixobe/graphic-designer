@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen, Method } from '@stencil/core';
 import { AppEvent, AppEventType, GraphicDesingConfig } from 'src';
 import { EventHandler } from 'src/core/event.handler';
 import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
@@ -14,6 +14,7 @@ export class GraphicDesigner {
 
   @Prop()
   src: string;
+
   @Prop()
   config: GraphicDesingConfig;
 
@@ -22,8 +23,14 @@ export class GraphicDesigner {
 
   @State()
   drawerOpen: boolean = false;
+
   @State()
   drawerContent: string = '';
+
+  @Method()
+  async getData(): Promise<any> {
+    return this.eventHandler.getCanvasData();
+  }
 
   eventHandler: EventHandler;
 
