@@ -14,6 +14,7 @@ export namespace Components {
     }
     interface GraphicDesigner {
         "config": GraphicDesingConfig;
+        "getData": () => Promise<any>;
         "src": string;
     }
     interface GraphicGallery {
