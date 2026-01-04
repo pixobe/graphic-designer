@@ -1,0 +1,56 @@
+:host {
+  --text-primary: oklch(0.2 0.03 260);
+  --text-secondary: oklch(0.4 0.02 260);
+  --text-tertiary: oklch(0.7 0.01 260);
+  --primary-background: oklch(0.98 0 0);
+  --secondary-background: oklch(0.96 0 0);
+  --tertiary-background: oklch(0.92 0 0);
+  --quaternary-background: oklch(0.88 0 0);
+  --button-primary: oklch(0.65 0.15 230);
+  --button-text-primary: oklch(0.98 0 0);
+  --button-secondary: var(--tertiary-background);
+  --button-text-secondary: var(--text-secondary);
+  --icon-bg: var(--tertiary-background);
+  --icon-border: var(--tertiary-background);
+  --icon-color: var(--text-secondary);
+  --box-shadow: oklch(0.9 0 0);
+  --placeholder: oklch(0.68 0.01 260);
+  --error-background: #fdecea;
+  --error-text: #b71c1c;
+  --error-border: #f5c6cb;
+  --active-border: oklch(0.75 0.13 260);
+  --background-transparent: rgba(230, 230, 230, 0.6);
+  --p-border-radius: 4px;
+  --p-element-gap: 4px;
+  --p-section-background: oklch(1 0 0);
+  --checkbox-background: oklch(0.38 0 0);
+  --checkbox-color: oklch(0.98 0 0);
+}
+@media (prefers-color-scheme: dark) {
+  :host {
+    --text-primary: oklch(0.95 0 0);
+    --text-secondary: oklch(0.75 0 0);
+    --text-tertiary: oklch(0.6 0 0);
+    --primary-background: oklch(0.18 0 0);
+    --secondary-background: oklch(0.24 0 0);
+    --tertiary-background: oklch(0.32 0 0);
+    --quaternary-background: oklch(0.38 0 0);
+    --box-shadow: oklch(0.3 0 0);
+    --placeholder: oklch(0.5 0 0);
+    --background-transparent: rgba(30, 30, 30, 0.6);
+    --p-section-background: oklch(0 0 0);
+    --checkbox-background: oklch(0.98 0 0);
+    --checkbox-color: oklch(0.38 0 0);
+  }
+}
+:host {
+  --font-family: system-ui, sans-serif;
+  --font-size: 14px;
+  --font-weight: 400;
+  --label-weight: 450;
+  --p-height: 32px;
+  --p-border-radius: 8px;
+  --p-section-padding: 8px;
+  --p-flex-gap: 8px;
+  --p-element-margin: 8px;
+}

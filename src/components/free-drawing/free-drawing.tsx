@@ -9,7 +9,7 @@ import { AppEvent, AppEventType, FreeDrawingDto } from 'src';
 export class FreeDrawing {
 
   @Element()
-  el!: HTMLGraphicDesignerElement;
+  el!: HTMLElement;
 
   @Event({ eventName: 'appEvent' })
   eventEmitter: EventEmitter<AppEvent<FreeDrawingDto>>;

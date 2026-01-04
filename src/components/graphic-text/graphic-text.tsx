@@ -9,40 +9,37 @@ import { AppEvent, AppEventType, GraphicTextDto } from 'src';
 export class GraphicText {
 
   @Element()
-  el!: HTMLGraphicDesignerElement;
+  el!: Element;
 
   @Event({ eventName: 'appEvent' })
   eventEmitter: EventEmitter<AppEvent<GraphicTextDto>>;
 
-  emit() {
-    const textElement = this.el.shadowRoot!.querySelector('#graphic-text') as HTMLInputElement;
-    const colorElement = this.el.shadowRoot!.querySelector('#text-color') as HTMLInputElement;
+  formElementRef: any;
 
+  emit = async () => {
+    const payload = await this.formElementRef?.getFormData();
     this.eventEmitter.emit({
       type: AppEventType.AddText,
-      payload: {
-        text: textElement?.value || 'Edit Me',
-        color: colorElement?.value || '#000000'
-      }
+      payload
     });
   }
 
   render() {
     return (
       <Host>
-        <form class="form-group">
-          <div class="form-element">
-            <label>Text:</label>
-            <textarea id="graphic-text" rows={10}></textarea>
+        <p-form ref={el => this.formElementRef = el}>
+          <div class="form-group">
+            <div class="form-element">
+              <p-textarea name="text" label="Text"></p-textarea>
+            </div>
+            <div class="form-element">
+              <p-colorpicker name="stroke" label="Color" value="#FF7799" />
+            </div>
+            <div class="form-buttons">
+              <button class="btn-primary" onClick={() => this.emit()} type="button">Add</button>
+            </div>
           </div>
-          <div class="form-element">
-            <label>Color:</label>
-            <input type="color" value="#000000" id="text-color" />
-          </div>
-          <div class="form-buttons">
-            <button class="btn-primary" onClick={() => this.emit()} type="button">Add</button>
-          </div>
-        </form>
+        </p-form>
       </Host>
     );
   }

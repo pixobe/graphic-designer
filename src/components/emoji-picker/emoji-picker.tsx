@@ -11,7 +11,7 @@ import { AppEvent, AppEventType, } from 'src';
 export class EmojiPicker {
 
   @Element()
-  el: HTMLEmojiPickerElement;
+  el: HTMLElement;
 
   @Event({ eventName: 'appEvent' })
   emojiSelectEventEmitter: EventEmitter<AppEvent<any>>;

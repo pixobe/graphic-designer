@@ -58,7 +58,7 @@ export class EventHandler {
   }
 
   addText(payload: any) {
-    const itext = new fabric.IText(payload.text, { fill: payload.color || '#000000' });
+    const itext = new fabric.IText(payload.text, { fill: payload.stroke || '#000000' });
     this.graphicCanvas.addCentered(itext);
   }
 

@@ -52,12 +52,12 @@ export interface MediaItem {
 
 export interface MediaGallery {
   name: string;
-  items: MediaItem[];
+  images: MediaItem[];
 }
 
 /**
  *
  */
 export interface GraphicDesingConfig {
-  gallery: MediaGallery;
+  gallery: MediaGallery[];
 }

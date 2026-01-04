@@ -1,3 +1,4 @@
+import '@pixobe/stencil-components';
 import * as fabric from 'fabric';
 
 declare module 'fabric' {
@@ -24,3 +25,5 @@ declare module 'fabric' {
     id: string;
   }
 }
+
+export default () => {};

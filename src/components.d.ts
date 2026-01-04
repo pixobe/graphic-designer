@@ -18,7 +18,7 @@ export namespace Components {
         "src": string;
     }
     interface GraphicGallery {
-        "mediaGallery": MediaGallery;
+        "mediaGallery": MediaGallery[];
     }
     interface GraphicText {
     }
@@ -150,7 +150,7 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface GraphicGallery {
-        "mediaGallery"?: MediaGallery;
+        "mediaGallery"?: MediaGallery[];
         "onAppEvent"?: (event: GraphicGalleryCustomEvent<AppEvent<any>>) => void;
     }
     interface GraphicText {

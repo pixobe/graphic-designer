@@ -1,19 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/html-vite';
+import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { h } from '@stencil/core';
 import { GraphicText } from './graphic-text';
 
-
-const meta: Meta<GraphicText> = {
-    title: "Graphic Designer/Text",
-    render: (_, { loaded: { } }) => {
-        const el = document.createElement("graphic-text");
-        return el;
+const meta = {
+    title: 'Text',
+    component: 'graphic-text',
+    parameters: {},
+    argTypes: {},
+    args: {},
+    render: (props: any) => {
+        return <graphic-text {...props} />;
     }
-};
+} satisfies Meta<GraphicText>;
 
 export default meta;
-type Story = StoryObj<GraphicText>;
+type Story = StoryObj;
 
-export const Design: Story = {
-    args: {
-    }
+export const Basic: Story = {
+    args: {},
 };

@@ -1,10 +1,8 @@
-import type { StorybookConfig } from '@storybook/html-vite';
-
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [],
   framework: {
-    name: '@storybook/html-vite',
+    name: '@stencil/storybook-plugin',
     options: {},
     staticDirs: ['../assets'],
   },

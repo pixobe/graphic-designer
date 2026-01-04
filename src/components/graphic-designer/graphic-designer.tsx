@@ -8,9 +8,9 @@ import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
   styleUrl: 'graphic-designer.scss',
   shadow: true,
 })
-export class GraphicDesigner {
+export class PixobeGraphicDesignerEelement {
   @Element()
-  el!: HTMLGraphicDesignerElement;
+  el!: HTMLElement;
 
   @Prop()
   src: string;
