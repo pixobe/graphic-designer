@@ -5,6 +5,7 @@ import * as fabric from 'fabric';
 import { GraphicCanvas } from './graphic.canvas';
 import { AppEvent, AppEventType, FreeDrawingDto, MediaItem } from 'src';
 import { downloadCanvasAsImage } from '../core/download-utils';
+import { ControlBuilder } from './custom-controls';
 
 export class EventHandler {
   private graphicCanvas: GraphicCanvas;
@@ -14,18 +15,20 @@ export class EventHandler {
   async init() {
     const canvas: HTMLCanvasElement = this.el.shadowRoot?.querySelector('canvas')!;
     if (!canvas) return;
+
+    fabric.InteractiveFabricObject.ownDefaults.controls = ControlBuilder.build({
+      delete: true,
+      edit: true,
+      rotate: true,
+      expand: true,
+    });
+
     this.graphicCanvas = new GraphicCanvas({
       canvas,
       config: {},
       data: this.data,
       src: this.src,
-      props: { backgroundColor: '#cacaca' },
-      controlConfig: {
-        delete: true,
-        edit: true,
-        rotate: true,
-        expand: true,
-      },
+      props: { backgroundColor: '#ffffff' },
     });
     await this.graphicCanvas.render();
   }
@@ -34,8 +37,10 @@ export class EventHandler {
    *
    */
   async render(data?: any): Promise<void> {
-    await this.graphicCanvas.loadFromJSON(data);
-    this.graphicCanvas.requestRenderAll();
+    if (data) {
+      await this.graphicCanvas.loadFromJSON(data);
+      this.graphicCanvas.requestRenderAll();
+    }
   }
 
   async handleEvent(event: AppEvent<any>): Promise<void> {

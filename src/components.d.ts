@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AppEvent, FreeDrawingDto, GraphicDesingConfig, GraphicTextDto, MediaGallery } from "./index";
 export { AppEvent, FreeDrawingDto, GraphicDesingConfig, GraphicTextDto, MediaGallery } from "./index";
 export namespace Components {
+    interface DesignWrapper {
+    }
     interface EmojiPicker {
     }
     interface FreeDrawing {
@@ -23,6 +25,11 @@ export namespace Components {
         "mediaGallery": MediaGallery[];
     }
     interface GraphicText {
+    }
+    interface PWpdesignWrapper {
+        "postId": number;
+        "saveButton"?: boolean;
+        "wpnonce": string;
     }
 }
 export interface EmojiPickerCustomEvent<T> extends CustomEvent<T> {
@@ -46,6 +53,12 @@ export interface GraphicTextCustomEvent<T> extends CustomEvent<T> {
     target: HTMLGraphicTextElement;
 }
 declare global {
+    interface HTMLDesignWrapperElement extends Components.DesignWrapper, HTMLStencilElement {
+    }
+    var HTMLDesignWrapperElement: {
+        prototype: HTMLDesignWrapperElement;
+        new (): HTMLDesignWrapperElement;
+    };
     interface HTMLEmojiPickerElementEventMap {
         "appEvent": AppEvent<any>;
     }
@@ -132,15 +145,25 @@ declare global {
         prototype: HTMLGraphicTextElement;
         new (): HTMLGraphicTextElement;
     };
+    interface HTMLPWpdesignWrapperElement extends Components.PWpdesignWrapper, HTMLStencilElement {
+    }
+    var HTMLPWpdesignWrapperElement: {
+        prototype: HTMLPWpdesignWrapperElement;
+        new (): HTMLPWpdesignWrapperElement;
+    };
     interface HTMLElementTagNameMap {
+        "design-wrapper": HTMLDesignWrapperElement;
         "emoji-picker": HTMLEmojiPickerElement;
         "free-drawing": HTMLFreeDrawingElement;
         "graphic-designer": HTMLGraphicDesignerElement;
         "graphic-gallery": HTMLGraphicGalleryElement;
         "graphic-text": HTMLGraphicTextElement;
+        "p-wpdesign-wrapper": HTMLPWpdesignWrapperElement;
     }
 }
 declare namespace LocalJSX {
+    interface DesignWrapper {
+    }
     interface EmojiPicker {
         "onAppEvent"?: (event: EmojiPickerCustomEvent<AppEvent<any>>) => void;
     }
@@ -162,23 +185,32 @@ declare namespace LocalJSX {
     interface GraphicText {
         "onAppEvent"?: (event: GraphicTextCustomEvent<AppEvent<GraphicTextDto>>) => void;
     }
+    interface PWpdesignWrapper {
+        "postId"?: number;
+        "saveButton"?: boolean;
+        "wpnonce"?: string;
+    }
     interface IntrinsicElements {
+        "design-wrapper": DesignWrapper;
         "emoji-picker": EmojiPicker;
         "free-drawing": FreeDrawing;
         "graphic-designer": GraphicDesigner;
         "graphic-gallery": GraphicGallery;
         "graphic-text": GraphicText;
+        "p-wpdesign-wrapper": PWpdesignWrapper;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "design-wrapper": LocalJSX.DesignWrapper & JSXBase.HTMLAttributes<HTMLDesignWrapperElement>;
             "emoji-picker": LocalJSX.EmojiPicker & JSXBase.HTMLAttributes<HTMLEmojiPickerElement>;
             "free-drawing": LocalJSX.FreeDrawing & JSXBase.HTMLAttributes<HTMLFreeDrawingElement>;
             "graphic-designer": LocalJSX.GraphicDesigner & JSXBase.HTMLAttributes<HTMLGraphicDesignerElement>;
             "graphic-gallery": LocalJSX.GraphicGallery & JSXBase.HTMLAttributes<HTMLGraphicGalleryElement>;
             "graphic-text": LocalJSX.GraphicText & JSXBase.HTMLAttributes<HTMLGraphicTextElement>;
+            "p-wpdesign-wrapper": LocalJSX.PWpdesignWrapper & JSXBase.HTMLAttributes<HTMLPWpdesignWrapperElement>;
         }
     }
 }

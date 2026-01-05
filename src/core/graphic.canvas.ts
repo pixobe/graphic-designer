@@ -1,5 +1,4 @@
 import { Canvas, FabricImage, FabricObject, util, BaseFabricObject, CanvasOptions } from 'fabric';
-import { ControlBuilder, ControlConfig } from './custom-controls';
 
 export interface GraphicCanvasConfig {
   src?: string;
@@ -7,7 +6,6 @@ export interface GraphicCanvasConfig {
   canvas: HTMLCanvasElement;
   config: Record<string, any>;
   data?: any;
-  controlConfig?: ControlConfig;
 }
 
 /**
@@ -31,7 +29,6 @@ export class GraphicCanvas extends Canvas {
     } else if (this.options.src) {
       await this.renderBg();
     }
-    // this.resize()
     this.requestRenderAll();
   }
 
@@ -40,7 +37,6 @@ export class GraphicCanvas extends Canvas {
    * @param obj
    */
   addCentered(obj: FabricObject): void {
-    obj.controls = ControlBuilder.build();
     obj.set({
       originX: 'center',
       originY: 'center',

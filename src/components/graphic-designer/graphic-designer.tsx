@@ -64,7 +64,6 @@ export class PixobeGraphicDesignerEelement {
     }
   }
 
-
   downloadEvent() {
     this.appEventEmiiter.emit({ type: AppEventType.DownloadImage });
   }

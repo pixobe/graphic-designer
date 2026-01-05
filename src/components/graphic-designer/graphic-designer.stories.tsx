@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { PixobeGraphicDesignerEelement } from './graphic-designer';
-import { dataBasic } from './data.mock';
+import { dataBasic, dataBird, defaultData } from './data.mock';
 
 
 const GALLERY = {
@@ -22,190 +22,6 @@ const GALLERY = {
     ]
 }
 
-const data = {
-    "version": "7.1.0",
-    "objects": [
-        {
-            "fontSize": 40,
-            "fontWeight": "normal",
-            "fontFamily": "Times New Roman",
-            "fontStyle": "normal",
-            "lineHeight": 1.16,
-            "text": "Hello Jitty",
-            "charSpacing": 0,
-            "textAlign": "left",
-            "styles": [],
-            "pathStartOffset": 0,
-            "pathSide": "left",
-            "pathAlign": "baseline",
-            "underline": false,
-            "overline": false,
-            "linethrough": false,
-            "textBackgroundColor": "",
-            "direction": "ltr",
-            "textDecorationThickness": 66.667,
-            "type": "IText",
-            "version": "7.1.0",
-            "originX": "center",
-            "originY": "center",
-            "left": 269.5,
-            "top": 345.5,
-            "width": 167.7734,
-            "height": 45.2,
-            "fill": "#FF7799",
-            "stroke": null,
-            "strokeWidth": 1,
-            "strokeDashArray": null,
-            "strokeLineCap": "butt",
-            "strokeDashOffset": 0,
-            "strokeLineJoin": "miter",
-            "strokeUniform": false,
-            "strokeMiterLimit": 4,
-            "scaleX": 1,
-            "scaleY": 1,
-            "angle": 0,
-            "flipX": false,
-            "flipY": false,
-            "opacity": 1,
-            "shadow": null,
-            "visible": true,
-            "backgroundColor": "",
-            "fillRule": "nonzero",
-            "paintFirst": "fill",
-            "globalCompositeOperation": "source-over",
-            "skewX": 0,
-            "skewY": 0
-        },
-        {
-            "cropX": 0,
-            "cropY": 0,
-            "type": "Image",
-            "version": "7.1.0",
-            "originX": "center",
-            "originY": "center",
-            "left": 316.5,
-            "top": 513.5,
-            "width": 432,
-            "height": 512,
-            "fill": "rgb(0,0,0)",
-            "stroke": null,
-            "strokeWidth": 0,
-            "strokeDashArray": null,
-            "strokeLineCap": "butt",
-            "strokeDashOffset": 0,
-            "strokeLineJoin": "miter",
-            "strokeUniform": false,
-            "strokeMiterLimit": 4,
-            "scaleX": 0.3906,
-            "scaleY": 0.3906,
-            "angle": 0,
-            "flipX": false,
-            "flipY": false,
-            "opacity": 1,
-            "shadow": null,
-            "visible": true,
-            "backgroundColor": "",
-            "fillRule": "nonzero",
-            "paintFirst": "fill",
-            "globalCompositeOperation": "source-over",
-            "skewX": 0,
-            "skewY": 0,
-            "src": "http://localhost:6006/assets/gallery/lion.jpg",
-            "crossOrigin": "anonymous",
-            "filters": []
-        },
-        {
-            "fontSize": 40,
-            "fontWeight": "normal",
-            "fontFamily": "Times New Roman",
-            "fontStyle": "normal",
-            "lineHeight": 1.16,
-            "text": "🦃",
-            "charSpacing": 0,
-            "textAlign": "left",
-            "styles": [],
-            "pathStartOffset": 0,
-            "pathSide": "left",
-            "pathAlign": "baseline",
-            "underline": false,
-            "overline": false,
-            "linethrough": false,
-            "textBackgroundColor": "",
-            "direction": "ltr",
-            "textDecorationThickness": 66.667,
-            "type": "IText",
-            "version": "7.1.0",
-            "originX": "center",
-            "originY": "center",
-            "left": 255.6832,
-            "top": 250.8918,
-            "width": 40,
-            "height": 45.2,
-            "fill": "rgb(0,0,0)",
-            "stroke": null,
-            "strokeWidth": 1,
-            "strokeDashArray": null,
-            "strokeLineCap": "butt",
-            "strokeDashOffset": 0,
-            "strokeLineJoin": "miter",
-            "strokeUniform": false,
-            "strokeMiterLimit": 4,
-            "scaleX": 2.6187,
-            "scaleY": 2.6187,
-            "angle": 0,
-            "flipX": false,
-            "flipY": false,
-            "opacity": 1,
-            "shadow": null,
-            "visible": true,
-            "backgroundColor": "",
-            "fillRule": "nonzero",
-            "paintFirst": "fill",
-            "globalCompositeOperation": "source-over",
-            "skewX": 0,
-            "skewY": 0
-        }
-    ],
-    "background": "#ff00ff",
-    "backgroundImage": {
-        "cropX": 0,
-        "cropY": 0,
-        "type": "Image",
-        "version": "7.1.0",
-        "originX": "center",
-        "originY": "center",
-        "left": 269.5,
-        "top": 345.5,
-        "width": 400,
-        "height": 512,
-        "fill": "rgb(0,0,0)",
-        "stroke": null,
-        "strokeWidth": 0,
-        "strokeDashArray": null,
-        "strokeLineCap": "butt",
-        "strokeDashOffset": 0,
-        "strokeLineJoin": "miter",
-        "strokeUniform": false,
-        "strokeMiterLimit": 4,
-        "scaleX": 1.3496,
-        "scaleY": 1.3496,
-        "angle": 0,
-        "flipX": false,
-        "flipY": false,
-        "opacity": 1,
-        "shadow": null,
-        "visible": true,
-        "backgroundColor": "",
-        "fillRule": "nonzero",
-        "paintFirst": "fill",
-        "globalCompositeOperation": "source-over",
-        "skewX": 0,
-        "skewY": 0,
-        "src": "http://localhost:6006/assets/hello-kitty.jpg",
-        "crossOrigin": "anonymous",
-        "filters": []
-    }
-};
 
 const meta = {
     title: 'The Designer',
@@ -250,6 +66,19 @@ export const Background: Story = {
     },
 };
 
+/**
+ * 
+ */
+export const PopulatedDataWithEmojis: Story = {
+    args: {
+        data: dataBird,
+        src: "/assets/hello-kitty.jpg",
+        config: {
+            gallery: [GALLERY, GALLERY, GALLERY, GALLERY, GALLERY, GALLERY, GALLERY]
+        }
+    },
+};
+
 
 export const BackgroundLandscape: Story = {
     args: {
@@ -277,6 +106,6 @@ export const Populated: Story = {
         config: {
             gallery: [GALLERY, GALLERY, GALLERY, GALLERY, GALLERY, GALLERY, GALLERY]
         },
-        data
+        data: defaultData
     },
 };
