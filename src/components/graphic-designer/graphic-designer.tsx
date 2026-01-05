@@ -1,7 +1,7 @@
-import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen, Method } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Event, EventEmitter, State, Listen, Method, Watch } from '@stencil/core';
 import { AppEvent, AppEventType, GraphicDesingConfig } from 'src';
 import { EventHandler } from 'src/core/event.handler';
-import { ResizeHandler, ResizeCanvas } from 'src/utils/render-utils';
+import { ResizeHandler, ResizeCanvas, ensureJsonObject } from 'src/utils/render-utils';
 
 @Component({
   tag: 'graphic-designer',
@@ -12,11 +12,17 @@ export class PixobeGraphicDesignerEelement {
   @Element()
   el!: HTMLElement;
 
-  @Prop()
+  @Prop({ reflect: true })
   src: string;
 
   @Prop()
   config: GraphicDesingConfig;
+
+  @Prop()
+  data?: GraphicDesingConfig;
+
+  @Prop()
+  showSaveButton: boolean;
 
   @Event({ eventName: 'appEvent' })
   appEventEmiiter: EventEmitter<AppEvent<any>>;
@@ -27,10 +33,19 @@ export class PixobeGraphicDesignerEelement {
   @State()
   drawerContent: string = '';
 
+  @State()
+  configObject: any;
+
+  @State()
+  dataObject: any;
+
   @Method()
   async getData(): Promise<any> {
     return this.eventHandler.getCanvasData();
   }
+
+  @Event({ eventName: "save" })
+  saveEventEmitter: EventEmitter<any>;
 
   eventHandler: EventHandler;
 
@@ -41,19 +56,25 @@ export class PixobeGraphicDesignerEelement {
     this.closeDrawer();
   }
 
+  @Watch("data")
+  watchDataChange(newData: any) {
+    this.dataObject = ensureJsonObject(newData);
+    if (this.eventHandler) {
+      this.eventHandler.render(this.dataObject);
+    }
+  }
+
+
   downloadEvent() {
     this.appEventEmiiter.emit({ type: AppEventType.DownloadImage });
   }
 
   async componentWillLoad() {
-    try {
-      if (typeof this.config === 'string') {
-        this.config = JSON.parse(this.config);
-      }
-    } catch (e) {
-      console.error(e)
+    this.configObject = ensureJsonObject(this.config);
+    if (this.data) {
+      this.dataObject = ensureJsonObject(this.data);
     }
-    this.eventHandler = new EventHandler(this.el, this.src);
+    this.eventHandler = new EventHandler(this.el, this.src, this.dataObject);
   }
 
   @ResizeHandler
@@ -104,16 +125,19 @@ export class PixobeGraphicDesignerEelement {
           </div>
         );
       case 'image':
-        console.log(this.config?.gallery)
         return (
           <div class="drawer-section">
             <h4>Media Gallery</h4>
-            <graphic-gallery mediaGallery={this.config?.gallery}></graphic-gallery>
+            <graphic-gallery mediaGallery={this.configObject?.gallery}></graphic-gallery>
           </div>
         );
       default:
         return null;
     }
+  }
+
+  onSaveClick = () => {
+    this.saveEventEmitter.emit(this.eventHandler.getCanvasData());
   }
 
   render() {
@@ -127,6 +151,7 @@ export class PixobeGraphicDesignerEelement {
             <button class="tool-btn" onClick={() => this.handleToolClick('text')}>⭐  Text</button>
             <button class="tool-btn" onClick={() => this.handleToolClick('image')}>🎄 Gallery</button>
             <button class="tool-btn download" onClick={() => this.downloadEvent()}>⬇️ Download</button>
+            {this.showSaveButton && <button class="tool-btn save" onClick={() => this.onSaveClick()}>💾 Save</button>}
           </aside>
 
           {/* Overlay Drawer */}
@@ -140,10 +165,8 @@ export class PixobeGraphicDesignerEelement {
           )}
 
           {/* Canvas area */}
-          <main class="gd-canvas-area">
-            <div class="gd-canvas-wrap canvas-wrapper">
-              <canvas></canvas>
-            </div>
+          <main class="gd-canvas-area canvas-wrapper">
+            <canvas></canvas>
           </main>
 
           {/* Footer for mobile */}

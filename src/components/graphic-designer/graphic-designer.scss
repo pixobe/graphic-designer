@@ -1,37 +1,39 @@
-:host {
-  --bg: #f4f4f4;
-  --card: #fff;
-  --border: #000;
-  --muted: #e0e0e0;
-  --muted-hover: #d5d5d5;
-  --danger: #800000;
-  --danger-hover: #a00000;
-  --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  --sidebar-w: 140px;
+@use 'src/styles/variables';
 
+:host {
   display: block;
   height: 100dvh;
-  background: var(--bg);
+  width: 100%;
+  background: var(--secondary-background);
 
   :where(.btn) {
     inline-size: 100%;
     padding: 0.5rem 0.75rem;
-    background: var(--muted);
-    border: 2px solid var(--border);
+    background: var(--button-secondary);
+    border: 2px solid var(--text-tertiary);
     font-weight: 600;
+    color: var(--button-text-secondary);
     cursor: pointer;
     text-align: center;
     transition: background 150ms ease;
   }
   :where(.btn:hover) {
-    background: var(--muted-hover);
+    background: var(--quaternary-background);
   }
   :where(.btn--danger) {
-    background: var(--danger);
-    color: #fff;
+    background: var(--error-text);
+    color: var(--button-text-primary);
   }
   :where(.btn--danger:hover) {
-    background: var(--danger-hover);
+    background: color-mix(in oklch, var(--error-text), var(--text-primary) 15%);
+  }
+
+  :where(.btn--save) {
+    background: var(--button-primary);
+    color: var(--button-text-primary);
+  }
+  :where(.btn--save:hover) {
+    background: color-mix(in oklch, var(--button-primary), var(--text-primary) 15%);
   }
 
   :where(.icon-btn) {
@@ -46,9 +48,9 @@
   }
 
   :where(.panel) {
-    background: var(--card);
-    border: 2px solid var(--border);
-    box-shadow: var(--shadow);
+    background: var(--primary-background);
+    border: 2px solid var(--text-tertiary);
+    box-shadow: 0 1px 1px var(--box-shadow);
   }
 
   /* ── Layout ────────────────────────────────────────────────────── */
@@ -63,9 +65,9 @@
     .gd-sidebar {
       display: flex;
       flex-direction: column;
-      inline-size: var(--sidebar-w);
-      background: var(--card);
-      border-inline-end: 2px solid var(--border);
+      inline-size: var(--layout-sidebar-width);
+      background: var(--primary-background);
+      border-inline-end: 2px solid var(--text-tertiary);
       padding: 10px;
       gap: 10px;
       z-index: 10;
@@ -82,6 +84,9 @@
       .tool-btn.download {
         @extend .btn--danger;
       }
+      .tool-btn.save {
+        @extend .btn--save;
+      }
     }
 
     /* Overlay Drawer */
@@ -96,7 +101,7 @@
     .drawer-panel {
       position: absolute;
       top: 0;
-      left: var(--sidebar-w);
+      left: var(--layout-sidebar-width);
       max-block-size: 100%;
       padding: 20px;
       overflow-y: auto;
@@ -114,7 +119,7 @@
         line-height: 1;
 
         &:hover {
-          background: #f0f0f0;
+          background: var(--tertiary-background);
           border-radius: 4px;
         }
       }
@@ -128,7 +133,7 @@
         h4 {
           font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
           margin: 0 0 15px;
-          border-bottom: 2px solid var(--border);
+          border-bottom: 2px solid var(--text-tertiary);
           padding-bottom: 8px;
         }
 
@@ -141,7 +146,7 @@
     /* Canvas area */
     .gd-canvas-area {
       flex: 1;
-      background: #efefef;
+      background: var(--tertiary-background);
       display: grid;
       place-items: center;
       position: relative;
@@ -166,8 +171,8 @@
       justify-content: space-around;
       align-items: center;
       block-size: 70px;
-      background: var(--card);
-      border-top: 2px solid var(--border);
+      background: var(--primary-background);
+      border-top: 2px solid var(--text-tertiary);
       z-index: 10;
       /* .icon-btn styles come from the atom above */
     }

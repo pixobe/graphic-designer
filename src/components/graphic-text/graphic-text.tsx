@@ -33,7 +33,7 @@ export class GraphicText {
               <p-textarea name="text" label="Text"></p-textarea>
             </div>
             <div class="form-element">
-              <p-colorpicker name="stroke" label="Color" value="#FF7799" />
+              <p-colorpicker name="stroke" label="Color" />
             </div>
             <div class="form-buttons">
               <button class="btn-primary" onClick={() => this.emit()} type="button">Add</button>

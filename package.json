@@ -51,7 +51,7 @@
   "dependencies": {
     "@emoji-mart/data": "^1.2.1",
     "@lobehub/fluent-emoji": "^4.1.0",
-    "@pixobe/stencil-components": "^0.0.44-alpha4",
+    "@pixobe/stencil-components": "^0.0.45",
     "@pixobe/ui-utils": "^1.0.15",
     "emoji-mart": "^5.6.0",
     "fabric": "7.1.0"

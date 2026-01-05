@@ -7,22 +7,19 @@ import { AppEvent, AppEventType, FreeDrawingDto, MediaItem } from 'src';
 import { downloadCanvasAsImage } from '../core/download-utils';
 
 export class EventHandler {
-  private el: HTMLElement;
-  private src?: string;
   private graphicCanvas: GraphicCanvas;
 
-  constructor(el: HTMLElement, src?: string) {
-    this.el = el;
-    this.src = src;
-  }
+  constructor(private el: HTMLElement, private src?: string, private data?: any) {}
 
-  init() {
+  async init() {
     const canvas: HTMLCanvasElement = this.el.shadowRoot?.querySelector('canvas')!;
     if (!canvas) return;
     this.graphicCanvas = new GraphicCanvas({
       canvas,
       config: {},
+      data: this.data,
       src: this.src,
+      props: { backgroundColor: '#cacaca' },
       controlConfig: {
         delete: true,
         edit: true,
@@ -30,7 +27,15 @@ export class EventHandler {
         expand: true,
       },
     });
-    return this.graphicCanvas.renderBg();
+    await this.graphicCanvas.render();
+  }
+
+  /**
+   *
+   */
+  async render(data?: any): Promise<void> {
+    await this.graphicCanvas.loadFromJSON(data);
+    this.graphicCanvas.requestRenderAll();
   }
 
   async handleEvent(event: AppEvent<any>): Promise<void> {
@@ -106,7 +111,7 @@ export class EventHandler {
       }
     }
     canvas.freeDrawingBrush.color = payload.color;
-    canvas.freeDrawingBrush.width = payload.brushSize;
+    canvas.freeDrawingBrush.width = parseInt(payload.brushSize);
   }
 
   /**
@@ -116,10 +121,10 @@ export class EventHandler {
    */
   downloadImage() {
     downloadCanvasAsImage(this.graphicCanvas, {
-      fileName: 'my-design',
+      fileName: 'img',
       format: 'png',
       quality: 1,
-      multiplier: 2, // 2x resolution for higher quality
+      multiplier: 2,
     });
   }
 

@@ -14,7 +14,9 @@ export namespace Components {
     }
     interface GraphicDesigner {
         "config": GraphicDesingConfig;
+        "data"?: GraphicDesingConfig;
         "getData": () => Promise<any>;
+        "showSaveButton": boolean;
         "src": string;
     }
     interface GraphicGallery {
@@ -80,6 +82,7 @@ declare global {
     };
     interface HTMLGraphicDesignerElementEventMap {
         "appEvent": AppEvent<any>;
+        "save": any;
     }
     interface HTMLGraphicDesignerElement extends Components.GraphicDesigner, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGraphicDesignerElementEventMap>(type: K, listener: (this: HTMLGraphicDesignerElement, ev: GraphicDesignerCustomEvent<HTMLGraphicDesignerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -146,7 +149,10 @@ declare namespace LocalJSX {
     }
     interface GraphicDesigner {
         "config"?: GraphicDesingConfig;
+        "data"?: GraphicDesingConfig;
         "onAppEvent"?: (event: GraphicDesignerCustomEvent<AppEvent<any>>) => void;
+        "onSave"?: (event: GraphicDesignerCustomEvent<any>) => void;
+        "showSaveButton"?: boolean;
         "src"?: string;
     }
     interface GraphicGallery {

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, Element, Event, EventEmitter } from '@stencil/core';
-import { AppEvent, MediaGallery } from 'src';
+import { AppEvent, AppEventType, MediaGallery } from 'src';
 
 @Component({
   tag: 'graphic-gallery',
@@ -16,12 +16,18 @@ export class GraphicGallery {
   @Event({ eventName: 'appEvent' })
   mediaSelectEvent: EventEmitter<AppEvent<any>>;
 
+  emitMediaSelect = (e) => {
+    const payload = e.detail;
+    this.mediaSelectEvent.emit({ type: AppEventType.AddImage, payload })
+  }
+
   render() {
     return (
       <Host>
         <div class="gallery-grid">
-          <h3>Media Gallery</h3>
-          <p-mediagallery value={this.mediaGallery}></p-mediagallery>
+          <div class="gallery-container">
+            <p-mediagallery value={this.mediaGallery} onImageSelect={this.emitMediaSelect} cols={4}></p-mediagallery>
+          </div>
         </div>
       </Host>
     );

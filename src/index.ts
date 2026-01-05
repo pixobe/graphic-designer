@@ -34,7 +34,7 @@ export interface AppEvent<T> {
  */
 export interface FreeDrawingDto {
   brushType: string;
-  brushSize: number;
+  brushSize: string;
   color: string;
 }
 

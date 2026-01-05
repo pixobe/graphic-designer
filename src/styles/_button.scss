@@ -1,9 +1,45 @@
-.btn-primary {
-  background-color: #52accc;
-  padding: 6px 8px;
-  border-radius: 4px;
-  outline: none;
-  border: none;
-  color: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+:host {
+  button {
+    all: unset;
+    display: block;
+    position: relative;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 4px 8px;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--secondary-background, #cacaca);
+    }
+  }
+
+  button.button-rounded {
+    border-radius: 50%;
+  }
+  button.btn-primary {
+    background-color: var(--button-primary);
+    color: var(--button-text-primary);
+    &:hover {
+      box-shadow: 0 0 2px var(--box-shadow);
+      background-color: color-mix(in oklch, var(--button-primary), var(--button-text-primary) 15%);
+    }
+  }
+  button.btn-secondary {
+    background-color: var(--button-secondary);
+    color: var(--button-text-secondary);
+    &:hover {
+      box-shadow: 0 0 2px var(--box-shadow);
+      background-color: color-mix(in oklch, var(--button-secondary), var(--button-text-secondary) 15%);
+    }
+  }
+
+  .btn-group {
+    margin: 1rem 0;
+    display: flex;
+    gap: 8px;
+    flex-direction: row-reverse;
+  }
 }

@@ -16,26 +16,37 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
+
+const GALLERY = {
+    name: "Animals",
+    images: [
+        {
+            url: "/assets/gallery/cow-calf.png"
+        },
+        {
+            url: "/assets/gallery/mouse.png"
+        },
+        {
+            url: "/assets/gallery/lion.jpg"
+        },
+        {
+            url: "/assets/gallery/monster-car.jpg"
+        },
+    ]
+}
+
 export const Basic: Story = {
     args: {
         mediaGallery: [
-            {
-                name: "Animals",
-                images: [
-                    {
-                        url: "/assets/gallery/cow-calf.png"
-                    },
-                    {
-                        url: "/assets/gallery/mouse.png"
-                    },
-                    {
-                        url: "/assets/gallery/lion.jpg"
-                    },
-                    {
-                        url: "/assets/gallery/monster-car.jpg"
-                    },
-                ]
-            }
+            GALLERY
+        ]
+    },
+};
+
+export const ManyGallery: Story = {
+    args: {
+        mediaGallery: [
+            GALLERY, GALLERY, GALLERY, GALLERY, GALLERY, GALLERY
         ]
     },
 };
